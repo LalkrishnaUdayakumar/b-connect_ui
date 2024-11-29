@@ -1,4 +1,5 @@
 import 'package:b_connect/api/login/login_resp.dart';
+import 'package:b_connect/app_provider.dart';
 import 'package:b_connect/auth/forgot_password.dart';
 import 'package:b_connect/auth/home_page.dart';
 import 'package:b_connect/auth/signup_page.dart';
@@ -8,9 +9,10 @@ import 'package:b_connect/common_components/custom_text.dart';
 import 'package:b_connect/common_components/textfeilds/mobile_number_textfeild.dart';
 import 'package:b_connect/common_components/textfeilds/password_textfeild.dart';
 import 'package:b_connect/controller.dart';
-import 'package:b_connect/main_screen.dart';
+import 'package:b_connect/mainscreen/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   static const String id = 'login';
@@ -23,6 +25,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
+    final appProvider = Provider.of<AppProvider>(context, listen: false);
     final AuthController ctrl = AuthController.instance;
     return Scaffold(
       body: Column(
@@ -111,7 +114,8 @@ class _LoginPageState extends State<LoginPage> {
                       LoginResponse? response = await ctrl.login();
                       if (response?.responseId == 200) {
                         debugPrint(response?.responseDescription);
-                        context.go('/${MainScreen.id}', extra: response);
+                        appProvider.setBearerToken(response!.token);
+                        context.go('/${MainScreen.id}');
                         // ctrl.clear;
                       }
                     } catch (e) {

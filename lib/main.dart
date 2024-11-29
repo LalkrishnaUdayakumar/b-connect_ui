@@ -1,14 +1,16 @@
-import 'package:b_connect/api/login/login_resp.dart';
+import 'package:b_connect/app_provider.dart';
 import 'package:b_connect/auth/forgot_password.dart';
 import 'package:b_connect/auth/home_page.dart';
 import 'package:b_connect/auth/login_page.dart';
 import 'package:b_connect/auth/signup_page.dart';
-import 'package:b_connect/main_screen.dart';
+import 'package:b_connect/mainscreen/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(
+      create: (context) => AppProvider(), child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -51,7 +53,7 @@ class MyApp extends StatelessWidget {
             GoRoute(
               path: '/${MainScreen.id}',
               builder: (BuildContext context, GoRouterState state) {
-                return MainScreen(loginResponse: state.extra as LoginResponse?);
+                return const MainScreen();
               },
             ),
           ],

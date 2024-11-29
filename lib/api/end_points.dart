@@ -10,5 +10,6 @@ class EndPOint {
   static String get signUp => '$baseUrl/signup';
   static String get login => '$baseUrl/login';
   static String get forgetpassword => '$baseUrl/forgetpassword';
-  static String get regDonor => '$baseUrl/reg_donor';
+  static String get regdonor => '$baseUrl/reg_donor';
+  static String get finddonor => '$baseUrl/findDonor';
 }

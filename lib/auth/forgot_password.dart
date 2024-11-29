@@ -1,12 +1,10 @@
 import 'package:b_connect/auth/home_page.dart';
 import 'package:b_connect/auth/login_page.dart';
-import 'package:b_connect/auth/signup_page.dart';
 import 'package:b_connect/common_components/button.dart';
 import 'package:b_connect/common_components/curved_bottom_clipper.dart';
 import 'package:b_connect/common_components/custom_text.dart';
 import 'package:b_connect/common_components/textfeilds/mobile_number_textfeild.dart';
 import 'package:b_connect/common_components/textfeilds/password_textfeild.dart';
-import 'package:b_connect/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 

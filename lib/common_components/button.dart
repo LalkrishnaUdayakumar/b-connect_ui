@@ -5,11 +5,15 @@ class Button extends StatefulWidget {
   final Color? buttonColor;
   final Widget? widget;
   final VoidCallback? onTap;
+  final double? height;
+  final double? width;
   const Button({
     super.key,
     this.buttonColor,
     this.widget,
     this.onTap,
+    this.height,
+    this.width,
   });
 
   @override
@@ -24,8 +28,8 @@ class _ButtonState extends State<Button> {
       onTap: widget.onTap,
       child: Container(
         alignment: Alignment.center,
-        height: screenSize.height * buttonBoxHeight,
-        width: screenSize.width * buttonBoxWidth,
+        height: widget.height ?? screenSize.height * buttonBoxHeight,
+        width: widget.width ?? screenSize.width * buttonBoxWidth,
         decoration: BoxDecoration(
             color: widget.buttonColor ?? const Color(0xFF800000),
             borderRadius: BorderRadius.circular(8),

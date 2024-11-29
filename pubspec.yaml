@@ -40,6 +40,11 @@ dependencies:
   http: ^1.2.2
   image_picker: ^1.1.2
   image_cropper: ^8.0.2
+  provider: ^6.1.2
+  url_launcher: ^6.3.1
+  
+ 
+  
 
 dev_dependencies:
   flutter_test:
@@ -74,6 +79,7 @@ flutter:
     - assets/images/o-.png
     - assets/images/o+.png
     - assets/images/lal.png
+    - assets/images/anamika.png
     - assets/images/male_profile.png
     - assets/images/female_profile.png
     - assets/images/upload_img.png
