@@ -4,12 +4,16 @@ class CustomListTile extends StatelessWidget {
   final String name;
   final String place;
   final String bloodType;
+  final String userImage;
+  final String bloodGroupImage;
 
   const CustomListTile({
     super.key,
     required this.name,
     required this.place,
     required this.bloodType,
+    required this.userImage,
+    required this.bloodGroupImage,
   });
 
   @override
@@ -34,7 +38,7 @@ class CustomListTile extends StatelessWidget {
           height: 50,
           child: ClipOval(
             child: Image.asset(
-              'assets/images/female_profile.png', // Example image URL
+              userImage, // Example image URL
               fit: BoxFit.cover,
             ),
           ),
@@ -51,7 +55,7 @@ class CustomListTile extends StatelessWidget {
           ],
         ),
         trailing: Image.asset(
-          'assets/images/o+.png', // Path to your image
+          bloodGroupImage, // Path to your image
           width: 50, // Custom image width
           height: 50, // Custom image height
           // How the image should be fitted inside the container

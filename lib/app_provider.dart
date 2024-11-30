@@ -9,11 +9,11 @@ class AppProvider extends ChangeNotifier {
 
   void setBearerToken(String bearerToken) {
     _bearerToken = bearerToken;
-    notifyListeners(); // Notify listeners when the token is set
+    notifyListeners();
   }
 
   void setUserInfo(List<UserInfo> value) {
     _userInfo = value;
-    notifyListeners(); // Notify listeners when the userInfo is updated
+    notifyListeners();
   }
 }
