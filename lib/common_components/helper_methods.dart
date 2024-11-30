@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:crypto/crypto.dart';
 
 class HelperMethods {
   makingPhoneCall(BuildContext context, String phoneNumber) async {
@@ -41,5 +44,11 @@ class HelperMethods {
         duration: const Duration(seconds: 2),
       ),
     );
+  }
+
+  String hashPassword(String password) {
+    var bytes = utf8.encode(password);
+    var hash = sha256.convert(bytes);
+    return hash.toString();
   }
 }

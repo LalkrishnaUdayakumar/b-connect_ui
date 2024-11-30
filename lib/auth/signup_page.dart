@@ -21,6 +21,14 @@ class SignupPage extends StatefulWidget {
 
 class _SignupPageState extends State<SignupPage> {
   final AuthController ctrl = AuthController.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    ctrl.userPassword.addListener(() => setState(() {}));
+    ctrl.userConfirmPassword.addListener(() => setState(() {}));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

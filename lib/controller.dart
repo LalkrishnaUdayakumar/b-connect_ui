@@ -4,11 +4,13 @@ import 'package:b_connect/api/login/login_resp.dart';
 import 'package:b_connect/api/signup/signup_api.dart';
 import 'package:b_connect/api/signup/signup_req.dart';
 import 'package:b_connect/api/signup/sigup_resp.dart';
+import 'package:b_connect/common_components/helper_methods.dart';
 import 'package:flutter/material.dart';
 
 class AuthController {
   AuthController._privateConstructor();
   static final AuthController instance = AuthController._privateConstructor();
+  final HelperMethods helper = HelperMethods();
 
   TextEditingController mobileNumber = TextEditingController();
   TextEditingController userName = TextEditingController();
@@ -19,7 +21,7 @@ class AuthController {
     SignUpRequest signUpReq = SignUpRequest(
       userName: userName.text,
       phoneNumber: mobileNumber.text,
-      password: userPassword.text,
+      password: helper.hashPassword(userPassword.text),
     );
     return await signUpCall(signUpReq);
   }
@@ -27,7 +29,7 @@ class AuthController {
   Future<LoginResponse?> login() async {
     LoginRequest loginReq = LoginRequest(
       phoneNumber: mobileNumber.text,
-      password: userPassword.text,
+      password: helper.hashPassword(userPassword.text),
     );
     return await loginCall(loginReq);
   }
