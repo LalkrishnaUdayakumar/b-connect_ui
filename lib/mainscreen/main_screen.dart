@@ -150,7 +150,7 @@ class _MainScreenState extends State<MainScreen> {
                         )),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 50.0, left: 05),
+                    padding: const EdgeInsets.only(top: 50.0, left: 10),
                     child: Text(
                       "Hello, ${appProvider.getLoginResponse!.userdetails.userName}",
                       style: const TextStyle(

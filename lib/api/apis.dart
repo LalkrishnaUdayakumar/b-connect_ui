@@ -5,7 +5,7 @@ import 'package:b_connect/api/save_profile_image/save_profile_image_api.dart';
 import 'package:b_connect/api/save_profile_image/save_profile_image_req.dart';
 import 'package:b_connect/api/save_profile_image/save_profile_image_resp.dart';
 
-Future<FindDonorResponse?> addProductToCart(
+Future<FindDonorResponse?> findDonors(
     String bloodGroup, String bearerToken) async {
   FindDonorRequest request = FindDonorRequest(bloodGroup: bloodGroup);
   return await findDonor(request, bearerToken);

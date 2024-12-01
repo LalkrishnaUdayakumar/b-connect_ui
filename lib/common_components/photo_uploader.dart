@@ -33,6 +33,126 @@ class _PhotoUploaderState extends State<PhotoUploader> {
     }
   }
 
+  void _showImageOptions() {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              ListTile(
+                leading: const Icon(Icons.photo_library),
+                title: const Text('Choose from Gallery'),
+                onTap: () {
+                  Navigator.pop(context);
+                  _getImage(ImageSource.gallery);
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.camera_alt),
+                title: const Text('Take a Photo'),
+                onTap: () {
+                  Navigator.pop(context);
+                  _getImage(ImageSource.camera);
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.remove_red_eye),
+                title: const Text('View Photo'),
+                onTap: () {
+                  Navigator.pop(context);
+                  _viewImage();
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _viewImage() {
+    // Determine the image to view
+    dynamic imageToView = _profileImage ?? widget.existingImage;
+
+    if (imageToView == null) {
+      // No image to view
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('No image available')),
+      );
+      return;
+    }
+
+    // Show full-screen image
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.black,
+            leading: IconButton(
+              icon: const Icon(Icons.close, color: Colors.white),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.edit, color: Colors.white),
+                onPressed: () {
+                  // Close the view image screen
+                  Navigator.of(context).pop();
+
+                  // Show image source options
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return SafeArea(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            ListTile(
+                              leading: const Icon(Icons.photo_library),
+                              title: const Text('Choose from Gallery'),
+                              onTap: () {
+                                Navigator.pop(context);
+                                _getImage(ImageSource.gallery);
+                              },
+                            ),
+                            ListTile(
+                              leading: const Icon(Icons.camera_alt),
+                              title: const Text('Take a Photo'),
+                              onTap: () {
+                                Navigator.pop(context);
+                                _getImage(ImageSource.camera);
+                              },
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+            ],
+          ),
+          backgroundColor: Colors.black,
+          body: Center(
+            child: imageToView is File
+                ? Image.file(
+                    imageToView,
+                    fit: BoxFit.contain,
+                    width: double.infinity,
+                  )
+                : Image.memory(
+                    imageToView,
+                    fit: BoxFit.contain,
+                    width: double.infinity,
+                  ),
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _buildImageWidget() {
     // If a new image is selected, show that
     if (_profileImage != null) {
@@ -86,36 +206,7 @@ class _PhotoUploaderState extends State<PhotoUploader> {
     return Stack(
       children: [
         GestureDetector(
-          onTap: () {
-            showModalBottomSheet(
-              context: context,
-              builder: (BuildContext context) {
-                return SafeArea(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      ListTile(
-                        leading: const Icon(Icons.photo_library),
-                        title: const Text('Choose from Gallery'),
-                        onTap: () {
-                          Navigator.pop(context);
-                          _getImage(ImageSource.gallery);
-                        },
-                      ),
-                      ListTile(
-                        leading: const Icon(Icons.camera_alt),
-                        title: const Text('Take a Photo'),
-                        onTap: () {
-                          Navigator.pop(context);
-                          _getImage(ImageSource.camera);
-                        },
-                      ),
-                    ],
-                  ),
-                );
-              },
-            );
-          },
+          onTap: _showImageOptions,
           child: _buildImageWidget(),
         ),
         Positioned(
@@ -134,11 +225,11 @@ class _PhotoUploaderState extends State<PhotoUploader> {
               ],
             ),
             child: const CircleAvatar(
-              radius: 15,
+              radius: 11,
               backgroundColor: Colors.white,
               child: Icon(
                 Icons.camera_alt,
-                size: 20,
+                size: 15,
                 color: Colors.black,
               ),
             ),
