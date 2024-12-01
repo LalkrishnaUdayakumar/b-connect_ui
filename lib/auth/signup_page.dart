@@ -34,6 +34,7 @@ class _SignupPageState extends State<SignupPage> {
 
   @override
   Widget build(BuildContext context) {
+    final navigator = Navigator.of(context);
     return Scaffold(
       body: Column(
         children: [
@@ -148,7 +149,7 @@ class _SignupPageState extends State<SignupPage> {
                       await Future.delayed(
                           Duration(milliseconds: remainingTime));
                     }
-                    Navigator.of(context).pop();
+                    navigator.pop();
                     if (response?.responseId == 200) {
                       debugPrint(response?.responseDescription);
                       context.go('/${LoginPage.id}');

@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -49,4 +51,16 @@ String hashPassword(String password) {
   var bytes = utf8.encode(password);
   var hash = sha256.convert(bytes);
   return hash.toString();
+}
+
+Future<String> encodeImageToBase64(File imagePath) async {
+  // Read the image as bytes
+  List<int> imageBytes = await imagePath.readAsBytes();
+  // Encode to Base64
+  String base64String = base64Encode(imageBytes);
+  return base64String;
+}
+
+Uint8List decodeBase64ToImage(String base64String) {
+  return base64Decode(base64String);
 }

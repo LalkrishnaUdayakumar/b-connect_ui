@@ -12,4 +12,5 @@ class EndPOint {
   static String get forgetpassword => '$baseUrl/forgetpassword';
   static String get regdonor => '$baseUrl/reg_donor';
   static String get finddonor => '$baseUrl/findDonor';
+  static String get saveProfilePhoto => '$baseUrl/saveProfilePhoto';
 }

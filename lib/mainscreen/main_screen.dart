@@ -1,15 +1,19 @@
 import 'dart:io';
+import 'dart:math';
 
+import 'package:b_connect/api/apis.dart';
 import 'package:b_connect/app_provider.dart';
 import 'package:b_connect/auth/home_page.dart';
 import 'package:b_connect/auth/login_page.dart';
 import 'package:b_connect/common_components/curved_bottom_clipper.dart';
+import 'package:b_connect/common_components/helper_methods.dart';
 import 'package:b_connect/common_components/photo_uploader.dart';
 import 'package:b_connect/constants.dart';
 import 'package:b_connect/donor_list.dart';
 import 'package:b_connect/mainscreen/scrollable_blood_type_container.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
@@ -24,13 +28,59 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  File? _uploadedImage;
+  File? uploadedImage;
 
   // Callback to handle image selection
-  void _onImageSelected(File image) {
-    setState(() {
-      _uploadedImage = image;
-    });
+  void _onImageSelected(File image) async {
+    final context = this.context;
+    final appProvider = Provider.of<AppProvider>(context, listen: false);
+    final navigator = Navigator.of(context);
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
+
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) => Center(
+        child: LoadingAnimationWidget.fourRotatingDots(
+          color: const Color(0xFF800000),
+          size: 50,
+        ),
+      ),
+    );
+    try {
+      final stopwatch = Stopwatch()..start();
+
+      final encodeedImage = await encodeImageToBase64(image);
+
+      final response =
+          await saveUserProfilePhoto(encodeedImage, appProvider.bearerToken!);
+      final elapsedTime = stopwatch.elapsedMilliseconds;
+      final remainingTime = max(0, 1200 - elapsedTime);
+
+      // Wait for remaining time if needed
+      if (remainingTime > 0) {
+        await Future.delayed(Duration(milliseconds: remainingTime));
+      }
+
+      // Close loading dialog
+      navigator.pop();
+      if (response != null) {
+        setState(() {
+          uploadedImage = image;
+        });
+
+        if (response.responseMessage == 'success') {
+          showSnackBar(
+            scaffoldMessenger,
+            response.responseDescription ?? '',
+          );
+        }
+      }
+    } catch (e, stackTrace) {
+      showSnackBar(scaffoldMessenger, 'Error while save image', status: false);
+      debugPrint('Error adding product to cart: $e');
+      debugPrint('Stack trace: $stackTrace');
+    }
   }
 
   @override
@@ -95,13 +145,14 @@ class _MainScreenState extends State<MainScreen> {
                         height: 60,
                         child: PhotoUploader(
                           onImageSelected: _onImageSelected,
+                          existingImage: decodeBase64ToImage(appProvider
+                              .getLoginResponse!.userdetails.imageBytes),
                         )),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 50.0, left: 05),
                     child: Text(
-                      appProvider.getLoginResponse!.userName,
-                      // "Hello, ${widget.loginResponse?.userName}",
+                      "Hello, ${appProvider.getLoginResponse!.userdetails.userName}",
                       style: const TextStyle(
                           color: Colors.white,
                           fontSize: 18,

@@ -115,6 +115,8 @@ class _LoginPageState extends State<LoginPage> {
           Button(
               onTap: () async {
                 // Check if mobile number and password are not empty
+                ctrl.mobileNumber.text = '9074827514';
+                ctrl.userPassword.text = 'Lal@123!';
                 if (ctrl.mobileNumber.text.isNotEmpty &&
                     ctrl.userPassword.text.isNotEmpty) {
                   // Show loading dialog

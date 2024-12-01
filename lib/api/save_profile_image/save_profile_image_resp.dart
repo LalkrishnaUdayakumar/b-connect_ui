@@ -1,14 +1,14 @@
 import 'dart:convert';
 
 class SaveProfileImageResponse {
-  final int responseId;
-  final String responseMessage;
-  final String responseDescription;
+  final int? responseId;
+  final String? responseMessage;
+  final String? responseDescription;
 
   SaveProfileImageResponse({
-    required this.responseId,
-    required this.responseMessage,
-    required this.responseDescription,
+    this.responseId,
+    this.responseMessage,
+    this.responseDescription,
   });
 
   factory SaveProfileImageResponse.fromRawJson(String str) =>
