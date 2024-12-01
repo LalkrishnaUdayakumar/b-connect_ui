@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:b_connect/api/login/login_resp.dart';
 import 'package:b_connect/app_provider.dart';
 import 'package:b_connect/auth/forgot_password.dart';
@@ -6,12 +8,14 @@ import 'package:b_connect/auth/signup_page.dart';
 import 'package:b_connect/common_components/button.dart';
 import 'package:b_connect/common_components/curved_bottom_clipper.dart';
 import 'package:b_connect/common_components/custom_text.dart';
+import 'package:b_connect/common_components/helper_methods.dart';
 import 'package:b_connect/common_components/textfeilds/mobile_number_textfeild.dart';
 import 'package:b_connect/common_components/textfeilds/password_textfeild.dart';
 import 'package:b_connect/controller.dart';
 import 'package:b_connect/mainscreen/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
@@ -27,6 +31,9 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     final appProvider = Provider.of<AppProvider>(context, listen: false);
     final AuthController ctrl = AuthController.instance;
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
+    final navigator = Navigator.of(context);
+
     return Scaffold(
       body: Column(
         children: [
@@ -107,25 +114,68 @@ class _LoginPageState extends State<LoginPage> {
           ),
           Button(
               onTap: () async {
-                {
-                  if (ctrl.mobileNumber.text.isNotEmpty &&
-                      ctrl.userPassword.text.isNotEmpty) {
-                    try {
-                      LoginResponse? response = await ctrl.login();
-                      if (response?.responseId == 200) {
-                        debugPrint(response?.responseDescription);
-                        appProvider.setBearerToken(response!.token);
-                        context.go('/${MainScreen.id}');
-                        // ctrl.clear;
-                      }
-                    } catch (e) {
-                      debugPrint(e.toString());
+                // Check if mobile number and password are not empty
+                if (ctrl.mobileNumber.text.isNotEmpty &&
+                    ctrl.userPassword.text.isNotEmpty) {
+                  // Show loading dialog
+                  showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (BuildContext context) => Center(
+                      child: LoadingAnimationWidget.fourRotatingDots(
+                        color: const Color(0xFF800000),
+                        size: 50,
+                      ),
+                    ),
+                  );
+
+                  try {
+                    // Start timer
+                    final stopwatch = Stopwatch()..start();
+
+                    // Perform login
+                    LoginResponse? response = await ctrl.login();
+
+                    // Calculate remaining time to ensure at least 2 seconds of loading
+                    final elapsedTime = stopwatch.elapsedMilliseconds;
+                    final remainingTime = max(0, 1200 - elapsedTime);
+
+                    // Wait for remaining time if needed
+                    if (remainingTime > 0) {
+                      await Future.delayed(
+                          Duration(milliseconds: remainingTime));
                     }
-                  } else {
-                    debugPrint(
-                      'User not found, Please enter a valid user details',
-                    );
+
+                    // Close loading dialog
+                    navigator.pop();
+
+                    // Check response
+                    if (response != null && response.responseId == 200) {
+                      debugPrint(response.responseDescription);
+                      appProvider.setBearerToken(response.token);
+                      appProvider.setLoginResponse(response);
+
+                      // Navigate to main screen
+                      context.go('/${MainScreen.id}');
+                    } else {
+                      showSnackBar(
+                          scaffoldMessenger, 'Login failed. Please try again',
+                          status: false);
+                    }
+                  } catch (e) {
+                    // Close loading dialog
+                    navigator.pop();
+
+                    debugPrint(e.toString());
+
+                    showSnackBar(scaffoldMessenger,
+                        'An error occurred during login: ${e.toString()}',
+                        status: false);
                   }
+                } else {
+                  showSnackBar(scaffoldMessenger,
+                      'Please enter mobile number and password',
+                      status: false);
                 }
               },
               widget: const CustomText(

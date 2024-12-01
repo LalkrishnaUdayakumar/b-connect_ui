@@ -97,12 +97,12 @@ class _MainScreenState extends State<MainScreen> {
                           onImageSelected: _onImageSelected,
                         )),
                   ),
-                  const Padding(
-                    padding: EdgeInsets.only(top: 50.0, left: 05),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 50.0, left: 05),
                     child: Text(
-                      "",
+                      appProvider.getLoginResponse!.userName,
                       // "Hello, ${widget.loginResponse?.userName}",
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.white,
                           fontSize: 18,
                           fontWeight: FontWeight.w600),

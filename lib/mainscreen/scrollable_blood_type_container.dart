@@ -1,8 +1,11 @@
+import 'dart:math';
+
 import 'package:b_connect/api/apis.dart';
 import 'package:b_connect/app_provider.dart';
 import 'package:b_connect/common_components/button.dart';
 import 'package:b_connect/mainscreen/bloodtype_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
 
 class ScrollableBloodTypeContainer extends StatefulWidget {
@@ -36,6 +39,7 @@ class _ScrollableBloodTypeContainerState
 
   @override
   Widget build(BuildContext context) {
+    final navigator = Navigator.of(context);
     final appProvider = Provider.of<AppProvider>(context, listen: false);
     return Container(
       height: 150, // Reverted to original height
@@ -113,9 +117,32 @@ class _ScrollableBloodTypeContainerState
                     width: 80,
                     buttonColor: const Color(0xFF800000),
                     onTap: () async {
+                      showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (BuildContext context) => Center(
+                          child: LoadingAnimationWidget.fourRotatingDots(
+                            color: const Color(0xFF800000),
+                            size: 50,
+                          ),
+                        ),
+                      );
                       try {
+                        final stopwatch = Stopwatch()..start();
+
                         final response = await addProductToCart(
                             _bloodGroup!, appProvider.bearerToken!);
+                        final elapsedTime = stopwatch.elapsedMilliseconds;
+                        final remainingTime = max(0, 1200 - elapsedTime);
+
+                        // Wait for remaining time if needed
+                        if (remainingTime > 0) {
+                          await Future.delayed(
+                              Duration(milliseconds: remainingTime));
+                        }
+
+                        // Close loading dialog
+                        navigator.pop();
                         if (response != null) {
                           appProvider.setUserInfo(response.userInfo);
                         }

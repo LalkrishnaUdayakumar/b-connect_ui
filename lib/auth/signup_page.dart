@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:b_connect/api/signup/sigup_resp.dart';
 import 'package:b_connect/auth/home_page.dart';
 import 'package:b_connect/auth/login_page.dart';
@@ -10,6 +12,7 @@ import 'package:b_connect/common_components/textfeilds/text_box_textfeild.dart';
 import 'package:b_connect/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class SignupPage extends StatefulWidget {
   static const String id = 'signup';
@@ -117,25 +120,47 @@ class _SignupPageState extends State<SignupPage> {
           ),
           Button(
               onTap: () async {
-                {
-                  if (ctrl.userPassword.text.isNotEmpty &&
-                      ctrl.userConfirmPassword.text.isNotEmpty &&
-                      ctrl.userPassword.text == ctrl.userConfirmPassword.text) {
-                    try {
-                      SignUpResponse? response = await ctrl.signUp();
-                      if (response?.responseId == 200) {
-                        debugPrint(response?.responseDescription);
-                        context.go('/${LoginPage.id}');
-                        // ctrl.clear;
-                      }
-                    } catch (e) {
-                      debugPrint(e.toString());
+                if (ctrl.userPassword.text.isNotEmpty &&
+                    ctrl.userConfirmPassword.text.isNotEmpty &&
+                    ctrl.userPassword.text == ctrl.userConfirmPassword.text) {
+                  showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (BuildContext context) {
+                      return Center(
+                        child: LoadingAnimationWidget.fourRotatingDots(
+                          color: const Color(0xFF800000),
+                          size: 50,
+                        ),
+                      );
+                    },
+                  );
+
+                  try {
+                    final stopwatch = Stopwatch()..start();
+                    SignUpResponse? response = await ctrl.signUp();
+
+                    final elapsedTime = stopwatch.elapsedMilliseconds;
+                    final remainingTime = max(0, 1200 - elapsedTime);
+
+                    // Wait for remaining time if needed
+                    if (remainingTime > 0) {
+                      await Future.delayed(
+                          Duration(milliseconds: remainingTime));
                     }
-                  } else {
-                    debugPrint(
-                      'Invalid Password\nPassword must contain at least one uppercase letter\none lowercase letter, one digit, and one special character\nPassword must be at least 8 characters long',
-                    );
+                    Navigator.of(context).pop();
+                    if (response?.responseId == 200) {
+                      debugPrint(response?.responseDescription);
+                      context.go('/${LoginPage.id}');
+                      // ctrl.clear;
+                    }
+                  } catch (e) {
+                    debugPrint(e.toString());
                   }
+                } else {
+                  debugPrint(
+                    'Invalid Password\nPassword must contain at least one uppercase letter\none lowercase letter, one digit, and one special character\nPassword must be at least 8 characters long',
+                  );
                 }
               },
               widget: const CustomText(
