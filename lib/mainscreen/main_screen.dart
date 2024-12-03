@@ -78,7 +78,7 @@ class _MainScreenState extends State<MainScreen> {
       }
     } catch (e, stackTrace) {
       showSnackBar(scaffoldMessenger, 'Error while save image', status: false);
-      debugPrint('Error adding product to cart: $e');
+      debugPrint('Error while save image: $e');
       debugPrint('Stack trace: $stackTrace');
     }
   }
@@ -112,8 +112,10 @@ class _MainScreenState extends State<MainScreen> {
                   orElse: () => {'imagePath': ''},
                 )['imagePath'] ??
                 '',
-            userImage:
-                userInfo.imageBytes == null ? userImage : userInfo.imageBytes!,
+            userImage: userInfo.imageBytes == null ? userImage : '',
+            bytes: userInfo.imageBytes != null
+                ? decodeBase64ToImage(userInfo.imageBytes!)
+                : '',
           );
         }).toList();
         return Column(
