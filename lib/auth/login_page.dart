@@ -13,6 +13,7 @@ import 'package:b_connect/common_components/textfeilds/mobile_number_textfeild.d
 import 'package:b_connect/common_components/textfeilds/password_textfeild.dart';
 import 'package:b_connect/controller.dart';
 import 'package:b_connect/mainscreen/main_screen.dart';
+import 'package:b_connect/token.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -156,7 +157,7 @@ class _LoginPageState extends State<LoginPage> {
                       debugPrint(response.responseDescription);
                       appProvider.setBearerToken(response.token);
                       appProvider.setLoginResponse(response);
-
+                      await TokenStorage.saveToken(response.token);
                       // Navigate to main screen
                       context.go('/${MainScreen.id}');
                     } else {

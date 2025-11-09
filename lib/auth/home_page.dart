@@ -2,6 +2,7 @@ import 'package:b_connect/auth/login_page.dart';
 import 'package:b_connect/auth/signup_page.dart';
 import 'package:b_connect/common_components/button.dart';
 import 'package:b_connect/common_components/custom_text.dart';
+import 'package:b_connect/mainscreen/donor_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -51,6 +52,7 @@ class _HomePageState extends State<HomePage> {
           Button(
               onTap: () {
                 context.go('/${SignupPage.id}');
+                // context.go('/${DonorDetailsScreen.id}');
               },
               widget: const CustomText(
                 text: 'SignUp',

@@ -3,14 +3,31 @@ import 'package:b_connect/auth/forgot_password.dart';
 import 'package:b_connect/auth/home_page.dart';
 import 'package:b_connect/auth/login_page.dart';
 import 'package:b_connect/auth/signup_page.dart';
+import 'package:b_connect/mainscreen/donor_details_screen.dart';
 import 'package:b_connect/mainscreen/main_screen.dart';
+import 'package:b_connect/token.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-void main() {
-  runApp(ChangeNotifierProvider(
-      create: (context) => AppProvider(), child: const MyApp()));
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final savedToken = await TokenStorage.getToken();
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) {
+        final appProvider = AppProvider();
+
+        // 🔹 If token exists, set it to provider (for runtime use)
+        if (savedToken != null && savedToken.isNotEmpty) {
+          appProvider.setBearerToken(savedToken);
+        }
+
+        return appProvider;
+      },
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -54,6 +71,12 @@ class MyApp extends StatelessWidget {
               path: '/${MainScreen.id}',
               builder: (BuildContext context, GoRouterState state) {
                 return const MainScreen();
+              },
+            ),
+            GoRoute(
+              path: '/${DonorDetailsScreen.id}',
+              builder: (BuildContext context, GoRouterState state) {
+                return const DonorDetailsScreen();
               },
             ),
           ],

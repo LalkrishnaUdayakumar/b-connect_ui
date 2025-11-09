@@ -1,11 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:b_connect/api/end_points.dart';
 import 'package:b_connect/api/login/login_req.dart';
 import 'package:b_connect/api/login/login_resp.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 typedef Request = LoginRequest;
@@ -29,7 +28,7 @@ Future<Response?> loginCall(Request req) async {
       body: req.toRawJson(),
     )
         .timeout(
-      const Duration(seconds: 30), // Set a timeout of 30 seconds
+      const Duration(seconds: 30),
       onTimeout: () {
         throw TimeoutException('Connection timed out');
       },
