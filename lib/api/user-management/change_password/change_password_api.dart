@@ -1,6 +1,6 @@
-import 'package:b_connect/api/api_service.dart';
-import 'package:b_connect/api/base_response.dart';
-import 'package:b_connect/api/change_password/change_password_request.dart';
+import 'package:b_connect/api/api-utils/api_service.dart';
+import 'package:b_connect/api/api-utils/base_response.dart';
+import 'package:b_connect/api/user-management/change_password/change_password_request.dart';
 
 const String apiName = 'changePassword';
 const String endpoint = '/changePassword';

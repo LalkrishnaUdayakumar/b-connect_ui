@@ -2,9 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:b_connect/api/end_points.dart';
-import 'package:b_connect/api/save_profile_image/save_profile_image_req.dart';
-import 'package:b_connect/api/save_profile_image/save_profile_image_resp.dart';
+import 'package:b_connect/api/api-utils/end_points.dart';
+import 'package:b_connect/api/user-management/save_profile_image/save_profile_image_req.dart';
+import 'package:b_connect/api/user-management/save_profile_image/save_profile_image_resp.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 

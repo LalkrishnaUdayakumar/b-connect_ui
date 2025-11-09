@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:b_connect/api/apis.dart';
+import 'package:b_connect/api/api-utils/apis.dart';
 import 'package:b_connect/app_provider.dart';
 import 'package:b_connect/common_components/button.dart';
 import 'package:b_connect/common_components/helper_methods.dart';

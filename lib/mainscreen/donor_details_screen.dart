@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:b_connect/api/login/login_resp.dart';
+import 'package:b_connect/api/user-management/login/login_resp.dart';
 import 'package:b_connect/app_provider.dart';
 import 'package:b_connect/auth/forgot_password.dart';
 import 'package:b_connect/auth/home_page.dart';

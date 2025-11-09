@@ -1,9 +1,9 @@
 import 'package:b_connect/api/finddonors/finddonor_api.dart';
 import 'package:b_connect/api/finddonors/finddonor_response.dart';
 import 'package:b_connect/api/finddonors/finddonor_resquest.dart';
-import 'package:b_connect/api/save_profile_image/save_profile_image_api.dart';
-import 'package:b_connect/api/save_profile_image/save_profile_image_req.dart';
-import 'package:b_connect/api/save_profile_image/save_profile_image_resp.dart';
+import 'package:b_connect/api/user-management/save_profile_image/save_profile_image_api.dart';
+import 'package:b_connect/api/user-management/save_profile_image/save_profile_image_req.dart';
+import 'package:b_connect/api/user-management/save_profile_image/save_profile_image_resp.dart';
 
 Future<FindDonorResponse?> findDonors(
     String bloodGroup, String bearerToken) async {

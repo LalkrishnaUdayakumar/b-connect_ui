@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 
-import 'package:b_connect/api/apis.dart';
+import 'package:b_connect/api/api-utils/apis.dart';
 import 'package:b_connect/app_provider.dart';
 import 'package:b_connect/auth/home_page.dart';
 import 'package:b_connect/auth/login_page.dart';

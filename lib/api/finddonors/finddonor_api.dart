@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:b_connect/api/end_points.dart';
+import 'package:b_connect/api/api-utils/end_points.dart';
 import 'package:b_connect/api/finddonors/finddonor_response.dart';
 import 'package:b_connect/api/finddonors/finddonor_resquest.dart';
 import 'package:flutter/material.dart';

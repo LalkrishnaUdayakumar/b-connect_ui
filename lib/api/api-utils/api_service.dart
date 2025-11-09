@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:b_connect/api/api_config.dart';
+import 'package:b_connect/api/api-utils/api_config.dart';
 import 'package:b_connect/token.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';

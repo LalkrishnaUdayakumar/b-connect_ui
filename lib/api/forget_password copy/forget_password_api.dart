@@ -1,6 +1,6 @@
-import 'package:b_connect/api/api_service.dart';
-import 'package:b_connect/api/base_response.dart';
-import 'package:b_connect/api/forget_password/forget_password_request.dart';
+import 'package:b_connect/api/api-utils/api_service.dart';
+import 'package:b_connect/api/api-utils/base_response.dart';
+import 'package:b_connect/api/user-management/forget_password/forget_password_request.dart';
 
 const String apiName = 'forgetPassword';
 const String endpoint = '/forgetPassword';

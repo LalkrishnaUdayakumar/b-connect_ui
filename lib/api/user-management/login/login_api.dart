@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'package:b_connect/api/end_points.dart';
-import 'package:b_connect/api/login/login_req.dart';
-import 'package:b_connect/api/login/login_resp.dart';
+import 'package:b_connect/api/api-utils/end_points.dart';
+import 'package:b_connect/api/user-management/login/login_req.dart';
+import 'package:b_connect/api/user-management/login/login_resp.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 

@@ -1,5 +1,5 @@
 import 'package:b_connect/api/finddonors/finddonor_response.dart';
-import 'package:b_connect/api/login/login_resp.dart';
+import 'package:b_connect/api/user-management/login/login_resp.dart';
 import 'package:flutter/material.dart';
 
 class AppProvider extends ChangeNotifier {

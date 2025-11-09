@@ -1,9 +1,9 @@
-import 'package:b_connect/api/login/login_api.dart';
-import 'package:b_connect/api/login/login_req.dart';
-import 'package:b_connect/api/login/login_resp.dart';
-import 'package:b_connect/api/signup/signup_api.dart';
-import 'package:b_connect/api/signup/signup_req.dart';
-import 'package:b_connect/api/signup/sigup_resp.dart';
+import 'package:b_connect/api/user-management/login/login_api.dart';
+import 'package:b_connect/api/user-management/login/login_req.dart';
+import 'package:b_connect/api/user-management/login/login_resp.dart';
+import 'package:b_connect/api/user-management/signup/signup_api.dart';
+import 'package:b_connect/api/user-management/signup/signup_req.dart';
+import 'package:b_connect/api/user-management/signup/sigup_resp.dart';
 import 'package:b_connect/common_components/helper_methods.dart';
 import 'package:flutter/material.dart';
 

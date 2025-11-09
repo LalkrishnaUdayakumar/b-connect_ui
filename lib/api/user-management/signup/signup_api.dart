@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:b_connect/api/end_points.dart';
-import 'package:b_connect/api/signup/signup_req.dart';
-import 'package:b_connect/api/signup/sigup_resp.dart';
-import 'package:b_connect/api/time_out_exception.dart';
+import 'package:b_connect/api/api-utils/end_points.dart';
+import 'package:b_connect/api/user-management/signup/signup_req.dart';
+import 'package:b_connect/api/user-management/signup/sigup_resp.dart';
+import 'package:b_connect/api/api-utils/time_out_exception.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 

@@ -1,5 +1,7 @@
-import 'package:b_connect/api/change_password/change_password_api.dart';
-import 'package:b_connect/api/change_password/change_password_request.dart';
+import 'package:b_connect/api/blood-management/approve_request/approve_request_api.dart';
+import 'package:b_connect/api/blood-management/pending_request/pending_request_api.dart';
+import 'package:b_connect/api/blood-management/reject_request/reject_request_api.dart';
+import 'package:b_connect/api/blood-management/request_history/request_history_api.dart';
 import 'package:b_connect/token.dart';
 import 'package:flutter/material.dart';
 
@@ -30,15 +32,14 @@ class _ForgetPasswordTestPageState extends State<ForgetPasswordTestPage> {
 
   Future<void> _callForgetPassword() async {
     await TokenStorage.saveToken(
-        "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5MDc0ODI3NTE0IiwiaWF0IjoxNzYyNjI5NTYyLCJleHAiOjE3NjI2MzU1NjJ9.PAr4V09NDQP8wg2YPX6BMxEpKVvhP6ZGeUmt78g8UBq2V-y9KBvjJiW8dffQqF873pkeRwaGsRQEhVr0jVz4jw");
-
-    final request = ChangePasswordRequest(
-      oldPassword: 'newPassword123',
-      newPassword: 'Lal@123!',
-    );
+        "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5ODQ3MTIzNDU2IiwiaWF0IjoxNzYyNjczOTM3LCJleHAiOjE3NjI2Nzk5Mzd9.8hX2DjawLGNAUvH-QHmPJj2gftoc7wx903vIkwxBg6EIxhGCForZLwcjXjyOnVSQibVl8HnojkRx_VYA4xuadw");
+    // final request = ForgetPasswordRequest(
+    //   phoneNumber: '9876543210',
+    //   newPassword: 'newPassword123',
+    // );
 
     try {
-      final response = await changePassword(request);
+      final response = await getRequestHistory('PENDING');
       setState(() {
         _responseMessage = 'Response: ${response?.toJson()}';
       });

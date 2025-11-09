@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:b_connect/api/signup/sigup_resp.dart';
+import 'package:b_connect/api/user-management/signup/sigup_resp.dart';
 import 'package:b_connect/auth/home_page.dart';
 import 'package:b_connect/auth/login_page.dart';
 import 'package:b_connect/common_components/button.dart';
